@@ -1,0 +1,114 @@
+2019-01-25 09:32:50,186 - INFO -parseExc.py : 22 :__init__ - 用例路径：E:\project\ApiTest\cases\exmple.xlsx
+2019-01-25 09:32:50,196 - INFO -run.py : 149 :run - 正在执行第1条用例
+2019-01-25 09:32:50,414 - INFO -run.py : 149 :run - 正在执行第2条用例
+2019-01-25 09:32:50,749 - INFO -run.py : 278 :run - 本次测试执行完毕，共耗时0.58秒，共执行用例：2条，成功：0条，失败：1条，阻塞：1条
+2019-01-25 09:32:50,751 - INFO -report.py : 147 :get_report - 正在写入用例执行情况
+2019-01-25 09:34:03,622 - INFO -parseExc.py : 22 :__init__ - 用例路径：E:\project\ApiTest\cases\exmple.xlsx
+2019-01-25 09:34:03,635 - INFO -run.py : 149 :run - 正在执行第1条用例
+2019-01-25 09:34:03,864 - INFO -run.py : 149 :run - 正在执行第2条用例
+2019-01-25 09:34:04,113 - INFO -run.py : 278 :run - 本次测试执行完毕，共耗时0.51秒，共执行用例：2条，成功：1条，失败：0条，阻塞：1条
+2019-01-25 09:34:04,115 - INFO -report.py : 147 :get_report - 正在写入用例执行情况
+2019-01-25 15:42:08,713 - INFO -parseExc.py : 22 :__init__ - 用例路径：E:\project\ApiTest\cases\exmple.xlsx
+2019-01-25 15:42:20,744 - INFO -parseExc.py : 22 :__init__ - 用例路径：E:\project\ApiTest\cases\exmple.xlsx
+2019-01-25 16:08:17,948 - INFO -parseExc.py : 22 :__init__ - 用例路径：E:\project\ApiTest\cases\exmple.xlsx
+2019-01-25 16:08:59,313 - INFO -parseExc.py : 22 :__init__ - 用例路径：E:\project\ApiTest\cases\exmple.xlsx
+2019-01-25 16:08:59,494 - INFO -newRun.py : 47 :excute_case - headers信息写入配置文件成功--->DIS4=8b0693c4658a4a508b9744de92407352; Expires=Sat, 25-Jan-2020 08:08:56 GMT; Max-Age=31536000; Path=/, lu=155; Expires=Sat, 25-Jan-2020 08:08:56 GMT; Max-Age=31536000; Path=/, ln=1; Expires=Sat, 25-Jan-2020 08:08:56 GMT; Max-Age=31536000; Path=/
+2019-01-25 16:09:10,250 - INFO -parseExc.py : 22 :__init__ - 用例路径：E:\project\ApiTest\cases\exmple.xlsx
+2019-01-25 16:09:10,416 - INFO -newRun.py : 47 :excute_case - headers信息写入配置文件成功--->DIS4=d540fc84b52446f7aa31b46f4cc304a1; Expires=Sat, 25-Jan-2020 08:09:07 GMT; Max-Age=31536000; Path=/, lu=156; Expires=Sat, 25-Jan-2020 08:09:07 GMT; Max-Age=31536000; Path=/, ln=1; Expires=Sat, 25-Jan-2020 08:09:07 GMT; Max-Age=31536000; Path=/
+2019-01-25 16:10:12,310 - INFO -parseExc.py : 22 :__init__ - 用例路径：E:\project\ApiTest\cases\exmple.xlsx
+2019-01-25 16:10:12,310 - INFO -newRun.py : 37 :excute_case - 此次接口请求的header信息为--->
+2019-01-25 16:10:12,447 - INFO -newRun.py : 48 :excute_case - headers信息写入配置文件成功--->DIS4=76995a04d35c445c8707247f6d5ea096; Expires=Sat, 25-Jan-2020 08:10:09 GMT; Max-Age=31536000; Path=/, lu=157; Expires=Sat, 25-Jan-2020 08:10:09 GMT; Max-Age=31536000; Path=/, ln=1; Expires=Sat, 25-Jan-2020 08:10:09 GMT; Max-Age=31536000; Path=/
+2019-01-25 16:10:12,448 - INFO -newRun.py : 37 :excute_case - 此次接口请求的header信息为--->{'headers': 'DIS4=76995a04d35c445c8707247f6d5ea096; Expires=Sat, 25-Jan-2020 08:10:09 GMT; Max-Age=31536000; Path=/, lu=157; Expires=Sat, 25-Jan-2020 08:10:09 GMT; Max-Age=31536000; Path=/, ln=1; Expires=Sat, 25-Jan-2020 08:10:09 GMT; Max-Age=31536000; Path=/'}
+2019-01-25 16:10:25,713 - INFO -parseExc.py : 22 :__init__ - 用例路径：E:\project\ApiTest\cases\exmple.xlsx
+2019-01-25 16:10:25,713 - INFO -newRun.py : 37 :excute_case - 此次接口请求的header信息为--->None
+2019-01-25 16:10:25,907 - INFO -newRun.py : 48 :excute_case - headers信息写入配置文件成功--->DIS4=69a363053f1b490e8542c869ea88645c; Expires=Sat, 25-Jan-2020 08:10:22 GMT; Max-Age=31536000; Path=/, lu=158; Expires=Sat, 25-Jan-2020 08:10:22 GMT; Max-Age=31536000; Path=/, ln=1; Expires=Sat, 25-Jan-2020 08:10:22 GMT; Max-Age=31536000; Path=/
+2019-01-25 16:10:25,907 - INFO -newRun.py : 37 :excute_case - 此次接口请求的header信息为--->{'headers': 'DIS4=69a363053f1b490e8542c869ea88645c; Expires=Sat, 25-Jan-2020 08:10:22 GMT; Max-Age=31536000; Path=/, lu=158; Expires=Sat, 25-Jan-2020 08:10:22 GMT; Max-Age=31536000; Path=/, ln=1; Expires=Sat, 25-Jan-2020 08:10:22 GMT; Max-Age=31536000; Path=/'}
+2019-01-25 16:11:24,322 - INFO -parseExc.py : 22 :__init__ - 用例路径：E:\project\ApiTest\cases\exmple.xlsx
+2019-01-25 16:11:24,322 - INFO -newRun.py : 37 :excute_case - 此次接口请求的header信息为--->None
+2019-01-25 16:11:24,474 - INFO -newRun.py : 48 :excute_case - headers信息写入配置文件成功--->DIS4=e21e89c2b9464e63b762d7040b338eaf; Expires=Sat, 25-Jan-2020 08:11:21 GMT; Max-Age=31536000; Path=/, lu=159; Expires=Sat, 25-Jan-2020 08:11:21 GMT; Max-Age=31536000; Path=/, ln=1; Expires=Sat, 25-Jan-2020 08:11:21 GMT; Max-Age=31536000; Path=/
+2019-01-25 16:16:56,278 - INFO -parseExc.py : 22 :__init__ - 用例路径：E:\project\ApiTest\cases\exmple.xlsx
+2019-01-25 16:16:56,278 - INFO -newRun.py : 37 :excute_case - 此次接口请求的header信息为--->None
+2019-01-25 16:16:56,476 - INFO -newRun.py : 48 :excute_case - headers信息写入配置文件成功--->DIS4=7ec34073e08d40e8bdf1f0a572c1ab36; Expires=Sat, 25-Jan-2020 08:16:53 GMT; Max-Age=31536000; Path=/, lu=160; Expires=Sat, 25-Jan-2020 08:16:53 GMT; Max-Age=31536000; Path=/, ln=1; Expires=Sat, 25-Jan-2020 08:16:53 GMT; Max-Age=31536000; Path=/
+2019-01-25 16:17:08,819 - INFO -parseExc.py : 22 :__init__ - 用例路径：E:\project\ApiTest\cases\exmple.xlsx
+2019-01-25 16:17:08,819 - INFO -newRun.py : 37 :excute_case - 此次接口请求的header信息为--->None
+2019-01-25 16:17:08,979 - INFO -newRun.py : 48 :excute_case - headers信息写入配置文件成功--->DIS4=32d1597dcf9f44a7b5ec77926ecda5cd; Expires=Sat, 25-Jan-2020 08:17:05 GMT; Max-Age=31536000; Path=/, lu=161; Expires=Sat, 25-Jan-2020 08:17:05 GMT; Max-Age=31536000; Path=/, ln=1; Expires=Sat, 25-Jan-2020 08:17:05 GMT; Max-Age=31536000; Path=/
+2019-01-25 16:17:44,256 - INFO -parseExc.py : 22 :__init__ - 用例路径：E:\project\ApiTest\cases\exmple.xlsx
+2019-01-25 16:17:44,257 - INFO -newRun.py : 37 :excute_case - 此次接口请求的header信息为--->None
+2019-01-25 16:17:44,457 - INFO -newRun.py : 48 :excute_case - headers信息写入配置文件成功--->DIS4=dd9243583f854d6e93d6f53092d76e99; Expires=Sat, 25-Jan-2020 08:17:41 GMT; Max-Age=31536000; Path=/, lu=162; Expires=Sat, 25-Jan-2020 08:17:41 GMT; Max-Age=31536000; Path=/, ln=1; Expires=Sat, 25-Jan-2020 08:17:41 GMT; Max-Age=31536000; Path=/
+2019-01-25 16:17:44,458 - INFO -newRun.py : 37 :excute_case - 此次接口请求的header信息为--->{'headers': 'DIS4=dd9243583f854d6e93d6f53092d76e99; Expires=Sat, 25-Jan-2020 08:17:41 GMT; Max-Age=31536000; Path=/, lu=162; Expires=Sat, 25-Jan-2020 08:17:41 GMT; Max-Age=31536000; Path=/, ln=1; Expires=Sat, 25-Jan-2020 08:17:41 GMT; Max-Age=31536000; Path=/'}
+2019-01-25 17:11:21,250 - INFO -parseExc.py : 22 :__init__ - 用例路径：E:\project\ApiTest\cases\exmple.xlsx
+2019-01-25 17:11:21,250 - INFO -newRun.py : 48 :excute_case - 此次接口请求的header信息为--->None
+2019-01-25 17:12:23,230 - INFO -parseExc.py : 22 :__init__ - 用例路径：E:\project\ApiTest\cases\exmple.xlsx
+2019-01-25 17:14:07,952 - INFO -parseExc.py : 22 :__init__ - 用例路径：E:\project\ApiTest\cases\exmple.xlsx
+2019-01-25 17:14:07,953 - INFO -newRun.py : 48 :excute_case - 此次接口请求的header信息为--->{'headers': 'DIS4=dd9243583f854d6e93d6f53092d76e99; Expires=Sat, 25-Jan-2020 08:17:41 GMT; Max-Age=31536000; Path=/, lu=162; Expires=Sat, 25-Jan-2020 08:17:41 GMT; Max-Age=31536000; Path=/, ln=1; Expires=Sat, 25-Jan-2020 08:17:41 GMT; Max-Age=31536000; Path=/'}
+2019-01-25 17:14:26,292 - INFO -parseExc.py : 22 :__init__ - 用例路径：E:\project\ApiTest\cases\exmple.xlsx
+2019-01-25 17:14:26,292 - INFO -newRun.py : 48 :excute_case - 此次接口请求的header信息为--->{'headers': 'DIS4=dd9243583f854d6e93d6f53092d76e99; Expires=Sat, 25-Jan-2020 08:17:41 GMT; Max-Age=31536000; Path=/, lu=162; Expires=Sat, 25-Jan-2020 08:17:41 GMT; Max-Age=31536000; Path=/, ln=1; Expires=Sat, 25-Jan-2020 08:17:41 GMT; Max-Age=31536000; Path=/'}
+2019-01-25 17:14:54,127 - INFO -parseExc.py : 22 :__init__ - 用例路径：E:\project\ApiTest\cases\exmple.xlsx
+2019-01-25 17:14:54,127 - INFO -newRun.py : 48 :excute_case - 此次接口请求的header信息为--->None
+2019-01-25 17:14:54,506 - INFO -newRun.py : 59 :excute_case - headers信息写入配置文件成功--->DIS4=be24d851c489465daf299c700f6205b6; Expires=Sat, 25-Jan-2020 09:14:51 GMT; Max-Age=31536000; Path=/, lu=163; Expires=Sat, 25-Jan-2020 09:14:51 GMT; Max-Age=31536000; Path=/, ln=1; Expires=Sat, 25-Jan-2020 09:14:51 GMT; Max-Age=31536000; Path=/
+2019-01-25 17:40:55,712 - INFO -parseExc.py : 22 :__init__ - 用例路径：E:\project\ApiTest\cases\exmple.xlsx
+2019-01-25 17:40:55,712 - INFO -newRun.py : 54 :excute_case - 此次接口请求的header信息为--->None
+2019-01-25 17:40:55,968 - INFO -newRun.py : 66 :excute_case - headers信息写入配置文件成功--->DIS4=f36c214512624778bd4543fc4f9ead39; Expires=Sat, 25-Jan-2020 09:40:52 GMT; Max-Age=31536000; Path=/, lu=164; Expires=Sat, 25-Jan-2020 09:40:52 GMT; Max-Age=31536000; Path=/, ln=1; Expires=Sat, 25-Jan-2020 09:40:52 GMT; Max-Age=31536000; Path=/
+2019-01-25 17:41:15,260 - INFO -parseExc.py : 22 :__init__ - 用例路径：E:\project\ApiTest\cases\exmple.xlsx
+2019-01-25 17:41:15,260 - INFO -newRun.py : 54 :excute_case - 此次接口请求的header信息为--->None
+2019-01-25 17:41:15,510 - INFO -newRun.py : 66 :excute_case - headers信息写入配置文件成功--->DIS4=c1916376700c409a87d2e5de165928fb; Expires=Sat, 25-Jan-2020 09:41:12 GMT; Max-Age=31536000; Path=/, lu=165; Expires=Sat, 25-Jan-2020 09:41:12 GMT; Max-Age=31536000; Path=/, ln=1; Expires=Sat, 25-Jan-2020 09:41:12 GMT; Max-Age=31536000; Path=/
+2019-01-25 17:41:25,476 - INFO -parseExc.py : 22 :__init__ - 用例路径：E:\project\ApiTest\cases\exmple.xlsx
+2019-01-25 17:41:25,476 - INFO -newRun.py : 54 :excute_case - 此次接口请求的header信息为--->None
+2019-01-25 17:41:25,901 - INFO -newRun.py : 66 :excute_case - headers信息写入配置文件成功--->DIS4=fc797e43e24e41c8bafe904c63d66f31; Expires=Sat, 25-Jan-2020 09:41:22 GMT; Max-Age=31536000; Path=/, lu=166; Expires=Sat, 25-Jan-2020 09:41:22 GMT; Max-Age=31536000; Path=/, ln=1; Expires=Sat, 25-Jan-2020 09:41:22 GMT; Max-Age=31536000; Path=/
+2019-01-25 17:42:32,421 - INFO -parseExc.py : 22 :__init__ - 用例路径：E:\project\ApiTest\cases\exmple.xlsx
+2019-01-25 17:42:32,421 - INFO -newRun.py : 54 :excute_case - 此次接口请求的header信息为--->None
+2019-01-25 17:42:32,551 - INFO -newRun.py : 66 :excute_case - headers信息写入配置文件成功--->DIS4=39c265008d06405db1ad11986ff4a5c3; Expires=Sat, 25-Jan-2020 09:42:29 GMT; Max-Age=31536000; Path=/, lu=167; Expires=Sat, 25-Jan-2020 09:42:29 GMT; Max-Age=31536000; Path=/, ln=1; Expires=Sat, 25-Jan-2020 09:42:29 GMT; Max-Age=31536000; Path=/
+2019-01-25 17:42:47,968 - INFO -parseExc.py : 22 :__init__ - 用例路径：E:\project\ApiTest\cases\exmple.xlsx
+2019-01-25 17:42:47,968 - INFO -newRun.py : 54 :excute_case - 此次接口请求的header信息为--->None
+2019-01-25 17:42:47,968 - ERROR -newRun.py : 60 :excute_case - ERRRR:暂不支持pyt这种请求方式
+2019-01-25 17:43:45,396 - INFO -parseExc.py : 22 :__init__ - 用例路径：E:\project\ApiTest\cases\exmple.xlsx
+2019-01-25 17:43:45,396 - INFO -newRun.py : 54 :excute_case - 此次接口请求的header信息为--->None
+2019-01-25 17:43:45,396 - ERROR -newRun.py : 60 :excute_case - ERRRR:暂不支持pyt这种请求方式
+2019-01-25 17:43:58,743 - INFO -parseExc.py : 22 :__init__ - 用例路径：E:\project\ApiTest\cases\exmple.xlsx
+2019-01-25 17:43:58,743 - INFO -newRun.py : 54 :excute_case - 此次接口请求的header信息为--->None
+2019-01-25 17:43:58,744 - ERROR -newRun.py : 60 :excute_case - ERRRR:暂不支持pyt这种请求方式
+2019-01-25 17:44:21,008 - INFO -parseExc.py : 22 :__init__ - 用例路径：E:\project\ApiTest\cases\exmple.xlsx
+2019-01-25 17:44:21,008 - INFO -newRun.py : 54 :excute_case - 此次接口请求的header信息为--->None
+2019-01-25 17:44:21,008 - ERROR -newRun.py : 60 :excute_case - ERRRR:暂不支持pyt这种请求方式
+2019-01-25 17:45:44,545 - INFO -parseExc.py : 22 :__init__ - 用例路径：E:\project\ApiTest\cases\exmple.xlsx
+2019-01-25 17:45:44,545 - INFO -newRun.py : 54 :excute_case - 此次接口请求的header信息为--->None
+2019-01-25 17:45:44,545 - ERROR -newRun.py : 60 :excute_case - ERRRR:暂不支持pyt这种请求方式
+2019-01-25 17:46:09,468 - INFO -parseExc.py : 22 :__init__ - 用例路径：E:\project\ApiTest\cases\exmple.xlsx
+2019-01-25 17:46:09,468 - INFO -newRun.py : 54 :excute_case - 此次接口请求的header信息为--->None
+2019-01-25 17:46:09,468 - ERROR -newRun.py : 60 :excute_case - ERRRR:暂不支持pyt这种请求方式
+2019-01-25 17:46:47,639 - INFO -parseExc.py : 22 :__init__ - 用例路径：E:\project\ApiTest\cases\exmple.xlsx
+2019-01-25 17:46:47,639 - INFO -newRun.py : 54 :excute_case - 此次接口请求的header信息为--->None
+2019-01-25 17:46:47,639 - ERROR -newRun.py : 60 :excute_case - ERRRR:暂不支持pyt这种请求方式
+2019-01-25 17:47:45,546 - INFO -parseExc.py : 22 :__init__ - 用例路径：E:\project\ApiTest\cases\exmple.xlsx
+2019-01-25 17:47:45,546 - INFO -newRun.py : 54 :excute_case - 此次接口请求的header信息为--->None
+2019-01-25 17:47:45,546 - ERROR -newRun.py : 60 :excute_case - ERRRR:暂不支持pyt这种请求方式
+2019-01-25 17:47:49,997 - INFO -parseExc.py : 22 :__init__ - 用例路径：E:\project\ApiTest\cases\exmple.xlsx
+2019-01-25 17:47:49,997 - INFO -newRun.py : 54 :excute_case - 此次接口请求的header信息为--->None
+2019-01-25 17:47:49,998 - ERROR -newRun.py : 60 :excute_case - ERRRR:暂不支持pyt这种请求方式
+2019-01-25 17:48:05,321 - INFO -parseExc.py : 22 :__init__ - 用例路径：E:\project\ApiTest\cases\exmple.xlsx
+2019-01-25 17:48:05,321 - INFO -newRun.py : 54 :excute_case - 此次接口请求的header信息为--->None
+2019-01-25 17:48:05,321 - ERROR -newRun.py : 60 :excute_case - ERRRR:暂不支持pyt这种请求方式
+2019-01-25 17:48:30,017 - INFO -parseExc.py : 22 :__init__ - 用例路径：E:\project\ApiTest\cases\exmple.xlsx
+2019-01-25 17:48:30,017 - INFO -newRun.py : 54 :excute_case - 此次接口请求的header信息为--->None
+2019-01-25 17:48:30,017 - ERROR -newRun.py : 60 :excute_case - ERRRR:暂不支持pyt这种请求方式
+2019-01-25 17:48:54,259 - INFO -parseExc.py : 22 :__init__ - 用例路径：E:\project\ApiTest\cases\exmple.xlsx
+2019-01-25 17:48:54,260 - INFO -newRun.py : 54 :excute_case - 此次接口请求的header信息为--->None
+2019-01-25 17:48:54,260 - ERROR -newRun.py : 60 :excute_case - ERRRR:暂不支持pyt这种请求方式
+2019-01-25 17:49:06,837 - INFO -parseExc.py : 22 :__init__ - 用例路径：E:\project\ApiTest\cases\exmple.xlsx
+2019-01-25 17:49:06,837 - INFO -newRun.py : 54 :excute_case - 此次接口请求的header信息为--->None
+2019-01-25 17:49:06,837 - ERROR -newRun.py : 60 :excute_case - ERRRR:暂不支持pyt这种请求方式
+2019-01-25 17:49:38,690 - INFO -parseExc.py : 22 :__init__ - 用例路径：E:\project\ApiTest\cases\exmple.xlsx
+2019-01-25 17:49:38,690 - INFO -newRun.py : 54 :excute_case - 此次接口请求的header信息为--->None
+2019-01-25 17:49:38,691 - ERROR -newRun.py : 60 :excute_case - ERRRR:暂不支持pyt这种请求方式
+2019-01-25 17:50:10,776 - INFO -parseExc.py : 22 :__init__ - 用例路径：E:\project\ApiTest\cases\exmple.xlsx
+2019-01-25 17:50:10,777 - INFO -newRun.py : 54 :excute_case - 此次接口请求的header信息为--->None
+2019-01-25 17:50:10,777 - ERROR -newRun.py : 60 :excute_case - ERRRR:暂不支持pyt这种请求方式
+2019-01-25 17:50:58,540 - INFO -parseExc.py : 22 :__init__ - 用例路径：E:\project\ApiTest\cases\exmple.xlsx
+2019-01-25 17:50:58,540 - INFO -newRun.py : 54 :excute_case - 此次接口请求的header信息为--->None
+2019-01-25 17:50:58,540 - ERROR -newRun.py : 60 :excute_case - ERRRR:暂不支持pyt这种请求方式
+2019-01-25 17:53:46,413 - INFO -parseExc.py : 22 :__init__ - 用例路径：E:\project\ApiTest\cases\exmple.xlsx
+2019-01-25 17:53:46,413 - INFO -newRun.py : 54 :excute_case - 此次接口请求的header信息为--->None
+2019-01-25 17:53:46,414 - ERROR -newRun.py : 60 :excute_case - ERRRR:暂不支持pyt这种请求方式
+2019-01-25 18:05:50,504 - INFO -parseExc.py : 22 :__init__ - 用例路径：E:\project\ApiTest\cases\exmple.xlsx
+2019-01-25 18:05:50,504 - INFO -newRun.py : 54 :excute_case - 此次接口请求的header信息为--->None
+2019-01-25 18:05:50,504 - ERROR -newRun.py : 60 :excute_case - ERRRR:暂不支持pyt这种请求方式

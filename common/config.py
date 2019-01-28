@@ -10,7 +10,7 @@ TESTDEV = "http://fp02.ops.gaoshou.me"
 # TESTDEV = "http://www.baidu.com"
 
 # 用例字段名
-CASENAME = ["caseId", "apiId", "caseDescribe", "apiHost", "params", "apiHeaders", "method", "relatedApi",
+CASENAME = ["caseId", "apiId", "caseDescribe", "apiHost", "apiParams", "apiHeaders", "method", "relatedApi",
             "relatedParams", "expect", "sqlStatement","databaseExpect","isExcute"]
 if platform.system() == "Windows":
     # 用例存放路径

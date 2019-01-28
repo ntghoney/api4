@@ -72,7 +72,7 @@ class HandleCase(object):
             host = str(quchu_n(datas["apiHost"]))
             expect = str(datas["expect"])
             method = str(datas["method"])
-            params = str(datas["params"])
+            params = str(datas["apiParams"])
             relatedParams = str(datas["relatedParams"])
             if expect:
                 if expect.split(";")[-1] != "":
@@ -106,7 +106,7 @@ class HandleCase(object):
             case["apiId"] = int(case["apiId"])
             case["caseDescribe"] = quchu_n(str(case["caseDescribe"]))
             case["apiHost"] = quchu_n(str(case["apiHost"]))
-            case["params"] = quchu_n(case["params"])
+            case["apiParams"] = quchu_n(case["apiParams"])
             case["apiHeaders"] = quchu_n(case["apiHeaders"])
             case["method"] = quchu_n(case["method"])
             if isinstance(case["relatedApi"], float):

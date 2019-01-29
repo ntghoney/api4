@@ -656,3 +656,12 @@
 2019-01-28 18:42:24,357 - INFO -newRun.py : 76 :excute_case - 关联接口-------->[]
 2019-01-28 18:42:24,574 - INFO -newRun.py : 342 :runAll - 本次测试执行完毕，共耗时0.37秒，共执行用例：2条，成功：0条，失败：0条，阻塞：2条
 2019-01-28 18:42:24,581 - INFO -report.py : 147 :get_report - 正在写入用例执行情况
+2019-01-28 18:46:16,759 - INFO -parseExc.py : 22 :__init__ - 用例路径：E:\project\ApiTest\cases\exmple.xlsx
+2019-01-28 18:46:16,914 - INFO -newRun.py : 290 :runAll - 正在执行第4条用例
+2019-01-28 18:46:16,915 - INFO -newRun.py : 74 :excute_case - 此次接口请求的header信息为--->{'cookie': 'DIS4=bd2e5da8b8f64e40ae1b7a79cd37785f'}
+2019-01-28 18:46:16,915 - INFO -newRun.py : 76 :excute_case - 关联接口-------->[]
+2019-01-28 18:46:17,085 - INFO -newRun.py : 290 :runAll - 正在执行第5条用例
+2019-01-28 18:46:17,085 - INFO -newRun.py : 74 :excute_case - 此次接口请求的header信息为--->{'cookie': 'DIS4=bd2e5da8b8f64e40ae1b7a79cd37785f'}
+2019-01-28 18:46:17,085 - INFO -newRun.py : 76 :excute_case - 关联接口-------->[]
+2019-01-28 18:46:17,181 - INFO -newRun.py : 342 :runAll - 本次测试执行完毕，共耗时0.27秒，共执行用例：2条，成功：0条，失败：0条，阻塞：2条
+2019-01-28 18:46:17,188 - INFO -report.py : 147 :get_report - 正在写入用例执行情况

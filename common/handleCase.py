@@ -4,11 +4,14 @@
 @Date  : 2019/1/15/015 18:24
 '''
 from common.parseExc import *
-from common.config import CASEPATH
 from common.log import Log
-from common.config import CASENAME
-import json
+from common.config import *
 import logging
+import re
+import os
+
+log = logging.getLogger()
+
 
 # 去掉换行符
 def quchu_n(str):
@@ -16,11 +19,26 @@ def quchu_n(str):
     return str
 
 
+def get_case_path():
+    path = os.path.dirname(__file__).replace("common", "cases")
+    rep = re.compile(r"^case_")
+    dir_name = os.listdir(path)
+    case_path = []
+    for file in dir_name:
+        extension = os.path.splitext(file)[1]  # 文件拓展名
+        file_name = os.path.splitext(file)[0]  # 文件名
+        if extension == ".xlsx" and re.findall(rep, file_name):
+            case_path.append(os.path.join(path, file))
+        else:
+            log.info("{}不符合规则".format(file))
+    return case_path
+
+
 class HandleCase(object):
-    def __init__(self):
+    def __init__(self,case_path):
         # 实例parseExc对象
-        self.log =Log().getLog()
-        self.pe = PaserExc(CASEPATH, 0)
+        self.log = Log().getLog()
+        self.pe = PaserExc(case_path, 0)
 
     # 总用例数
     def get_totals(self):
@@ -46,18 +64,18 @@ class HandleCase(object):
     # 处理关联参数
     def handle_related_params(self, item):
         related_params = []
-        if item  :
+        if item:
             if ";" in item:
-            #     for i in item.split(";"):
-            #         if "." in i:
-            #             related_params.append(i.split("."))
-            #         else:
-            #             related_params.append(i)
-            # elif "." in item:
-            #     related_params.append(item.split("."))
-            # else:
-            #     related_params.append(item)
-                related_params=item.split(";")
+                #     for i in item.split(";"):
+                #         if "." in i:
+                #             related_params.append(i.split("."))
+                #         else:
+                #             related_params.append(i)
+                # elif "." in item:
+                #     related_params.append(item.split("."))
+                # else:
+                #     related_params.append(item)
+                related_params = item.split(";")
         return related_params
 
     # 处理每条用例的数据格式
@@ -66,23 +84,23 @@ class HandleCase(object):
         checkPints = {}
         # relatedParamsInfo = {}
         if isinstance(datas, dict):
-            cid = int(datas["caseId"])
-            apiId = int(datas["apiId"])
-            describe = str(quchu_n(datas["caseDescribe"]))
-            host = str(quchu_n(datas["apiHost"]))
-            expect = str(datas["expect"])
-            method = str(datas["method"])
-            params = str(datas["apiParams"])
-            relatedParams = str(datas["relatedParams"])
+            cid = int(datas[CASEID])
+            apiId = int(datas[APIID])
+            describe = str(quchu_n(datas[CASEDESCRIBE]))
+            host = str(quchu_n(datas[APIHOST]))
+            expect = str(datas[EXPECT])
+            method = str(datas[METHOD])
+            params = str(datas[PARMAS])
+            relatedParams = str(datas[RELEATEDPARAMS])
             if expect:
                 if expect.split(";")[-1] != "":
                     for item in expect.split(";"):
                         checkPints.update(self.handle_checkPoint(item))
                 else:
                     checkPints = self.handle_checkPoint(expect.replace(";", ""))
-                datas["expect"] = checkPints
+                datas[EXPECT] = checkPints
             else:
-                datas["expect"] = {}
+                datas[EXPECT] = {}
             return datas
         else:
             raise Exception("参数错误，所传参数datas必须是字典")
@@ -102,28 +120,28 @@ class HandleCase(object):
             case.pop("isExcute")
         # 转换用例字段的数据格式
         for case in cases:
-            case["caseId"] = int(case["caseId"])
-            case["apiId"] = int(case["apiId"])
-            case["caseDescribe"] = quchu_n(str(case["caseDescribe"]))
-            case["apiHost"] = quchu_n(str(case["apiHost"]))
-            case["apiParams"] = quchu_n(case["apiParams"])
+            case[CASEID] = int(case[CASEID])
+            case[APIID] = int(case[APIID])
+            case[CASEDESCRIBE] = quchu_n(str(case[CASEDESCRIBE]))
+            case[APIHOST] = quchu_n(str(case[APIHOST]))
+            case[PARMAS] = quchu_n(case[PARMAS])
             case["apiHeaders"] = quchu_n(case["apiHeaders"])
-            case["method"] = quchu_n(case["method"])
-            if isinstance(case["relatedApi"], float):
-                case["relatedApi"] = int(case["relatedApi"])
+            case[METHOD] = quchu_n(case[METHOD])
+            if isinstance(case[RELATEDAPI], float):
+                case[RELATEDAPI] = int(case[RELATEDAPI])
             else:
-                case["relatedApi"] = None
-            case["relatedParams"] = quchu_n(case["relatedParams"])
-            case["relatedParams"] = case["relatedParams"]
-            case["expect"] = quchu_n(case["expect"])
+                case[RELATEDAPI] = None
+            case[RELEATEDPARAMS] = quchu_n(case[RELEATEDPARAMS])
+            case[RELEATEDPARAMS] = case[RELEATEDPARAMS]
+            case[EXPECT] = quchu_n(case[EXPECT])
             self.handle_data(case)
             result.append(case)
         return result
 
 
 if __name__ == '__main__':
-    a = 'code;c.code'
-    s = HandleCase()
-    c=s.get_cases()
-    for i in c:
-        print(i)
+    cases=[]
+    for i in get_case_path():
+        hc=HandleCase(i)
+        cases.extend(hc.get_cases())
+    print(len(cases))

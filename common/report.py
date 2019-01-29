@@ -9,6 +9,7 @@ from xlwt import *
 from common.parseConfig import setPath
 from common.parseConfig import ParseConfig
 import logging
+from common.config import *
 
 
 class Report(object):
@@ -107,27 +108,27 @@ class Report(object):
     # 逐行写入数据
     def write_line(self, row, resdic):
         for key in resdic.keys():
-            if key.__eq__("caseId"):
+            if key.__eq__(CASEID):
                 self.write(row, 0, resdic[key], self.style1())
-            elif key.__eq__("caseDescribe"):
+            elif key.__eq__(CASEDESCRIBE):
                 self.write(row, 1, resdic[key], self.style1())
-            elif key.__eq__("apiHost"):
+            elif key.__eq__(APIHOST):
                 self.write(row, 2, resdic[key], self.style1())
-            elif key.__eq__("except"):
+            elif key.__eq__(EXPECT):
                 self.write(row, 4, resdic[key], self.style1())
-            elif key.__eq__("apiParams"):
+            elif key.__eq__(PARMAS):
                 self.write(row, 3, resdic[key], self.style1())
-            elif key.__eq__("fact"):
+            elif key.__eq__(FACT):
                 self.write(row, 5, resdic[key], self.col_style())
-            elif key.__eq__("databaseResult"):
+            elif key.__eq__(DATABASERESUTL):
                 self.write(row, 6, resdic[key], self.col_style())
-            elif key.__eq__("databaseExpect"):
+            elif key.__eq__(DATABASEEXPECT):
                 self.write(row, 7, resdic[key], self.col_style())
-            elif key.__eq__("ispass"):
+            elif key.__eq__(ISPASS):
                 self.write(row, 8, resdic[key], self.col_style())
-            elif key.__eq__("time"):
+            elif key.__eq__(TIME):
                 self.write(row, 9, resdic[key], self.style1())
-            elif key.__eq__("reason"):
+            elif key.__eq__(REASON):
                 self.write(row, 10, resdic[key], self.style1())
 
     def get_report(self, result):

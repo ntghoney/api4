@@ -5,44 +5,76 @@
 '''
 from common.conDatabase import ConMysql, get_base_info
 from common.log import Log
-from common.handleCase import HandleCase
+from common.handleCase import HandleCase, get_case_path
 from common.httputils import Http
 from common.parseConfig import ParseConfig
 from common.report import get_now
 import string
-import time
+import datetime, time
 from common.report import Report
 import json
 import re
+from common.config import *
+import random
 
-pat=re.compile("DIS4=(.*?);")
-
+pat = re.compile("DIS4=(.*?);")
 log = Log().getLog()
 pc = ParseConfig()
+report = Report()  # 测试报告实例
 server_database = get_base_info(pc.get_info("ServerDatabase"))
-hc = HandleCase()
-CASEID = "caseId"
-APIID = "apiId"
-CASEDESCRIBE = "caseDescribe"
-APIHOST = "apiHost"
-PARMAS = "apiParams"
-METHOD = "method"
-HEADERS = "headers"
-RELATEDAPI = "relatedApi"
-RELEATEDPARAMS = "relatedParams"
-FACT = "fact"
-EXPECT = "expect"
-SQLSTATEMENT = "sqlStatement"
-DATABASERESUTL = "databaseResult"
-DATABASEEXPECT = "databaseExpect"
-ISPASS = "ispass"
-TIME = "time"
-FORMORT = "%Y/%m/%d %H:%M:%S"
-PASS = "pass"
-FAIL = "fail"
-REASON = "reason"
+
 con_server = ConMysql(server_database)  # 服务器数据库链接
 con = ConMysql()  # 本地数据库连接对象
+
+
+def generate_random_str(randomlength=16):
+    """
+    生成一个指定长度的随机字符串
+    """
+    random_str = ''
+    base_str = 'ABCDEFGHIGKLMNOPQRSTUVWXYZabcdefghigklmnopqrstuvwxyz0123456789'
+    length = len(base_str) - 1
+    for i in range(randomlength):
+        random_str += base_str[random.randint(0, length)]
+    return random_str
+
+
+# 请求头信息
+def get_headers():
+    headers = {"Accept": "*/*", "Content-Type": "application/json;charset=utf-8"}
+    cookies = pc.get_info("headers")
+    headers.update(cookies)
+    return headers
+
+
+# 从excel中获得所有用例
+def get_all_case():
+    cases = []
+    case_path = get_case_path()
+    for path in case_path:
+        hc = HandleCase(path)
+        cases.extend(hc.get_cases())
+    return cases
+
+
+# 更新t_user_verify表
+# number,date_created,status
+def updata_message(number):
+    result = con_server.query_one("select * from t_user_verify where number ={}".format(number))
+    timedelta = datetime.datetime.now() - datetime.timedelta(minutes=10)  # 十分钟前的时间
+    if not result:
+        con_server.insert_data("t_user_verify", number=number, call_sid=generate_random_str(32), verify="4883",
+                               date_created=get_now().strftime(FORMORT),
+                               status=1)
+        return
+    if result["date_created"] < timedelta:
+        sql = f"update t_user_verify set date_created='{get_now().strftime(FORMORT)}'where number={number}"
+        print(sql)
+        con_server.update_data(sql)
+    if result["status"] == 0:
+        con_server.update_data(
+            "update t_user_verify set status=1 where number={}".format(number)
+        )
 
 
 def excute_case(case):
@@ -59,25 +91,27 @@ def excute_case(case):
         apiId = case[APIID]
     host = case[APIHOST]
     if PARMAS in case.keys() and case[PARMAS]:
-        params = json.loads(case[PARMAS],encoding="utf8")
+        params = json.loads(case[PARMAS], encoding="utf8")
+        # 如果接口中有参数为phone，可能这个接口需要验证码，则调用updata_message初始化t_user_verify表
+        if "phone" in params.keys():
+            updata_message(params["phone"])
     else:
-        params=""
+        params = ""
     if METHOD in case.keys():
         method = case[METHOD]
-    print("host----------->{}".format(host))
     # 如果调用创建用户接口，不需要headers信息
     if "create_user" in host or "login.mobile" in host:
-        print("----------------------------------")
         headers = None
     else:
-        headers = {"cookie":pc.get_info(HEADERS)["headers"]}
+        # headers = {pc.get_info(HEADERS)["common"],"cookie":pc.get_info(HEADERS)["cookie"]}
+        headers = get_headers()
     log.info("此次接口请求的header信息为--->{}".format(headers))
     while True:
         log.info("关联接口-------->{}".format(allRelatedApi))
         if relatedApi is not None:
             relatedApiInfo = con.query_one("select * from apiInfo where apiId={}".format(relatedApi))
             if relatedApiInfo:
-                relatedApi = relatedApiInfo["relatedApi"]
+                relatedApi = relatedApiInfo[RELATEDAPI]
                 allRelatedApi.append(relatedApiInfo)
                 allRelatedApi.reverse()
             else:
@@ -92,13 +126,13 @@ def excute_case(case):
                 log.error("ERRRR:暂不支持{}这种请求方式".format(method))
                 return "ERRRR：暂不支持{}这种请求方式".format(method)
             # 如果调用创建用户或登录接口，将headers信息写入配置文件
-            if "login.mobile" in host or "create_user" in  host and res is not None :
-                dis4 = re.findall(pat,res.headers["Set-Cookie"])
-                if len(dis4)>1:
-                    pc.wirte_info(HEADERS, HEADERS, "DIS4={}".format(dis4[1]))
+            if "login.mobile" in host or "create_user" in host and res is not None:
+                dis4 = re.findall(pat, res.headers["Set-Cookie"])
+                if len(dis4) > 1:
+                    pc.wirte_info(HEADERS, "cookie", "DIS4={}".format(dis4[1]))
                     log.info("headers信息写入配置文件成功--->{}".format(dis4[1]))
                 else:
-                    pc.wirte_info(HEADERS, HEADERS, "DIS4={}".format(dis4[0]))
+                    pc.wirte_info(HEADERS, "cookie", "DIS4={}".format(dis4[0]))
                     log.info("headers信息写入配置文件成功--->{}".format(dis4[0]))
             break
         if allRelatedApi:
@@ -110,17 +144,17 @@ def excute_case(case):
                 else:
                     a = allRelatedApi[i]
                     b = allRelatedApi[i]
-                apiHost = a["apiHost"]
-                apiParams = a["apiParams"]
-                apiMethod = a["method"]
-                relatedParams = b["relatedParams"]
+                apiHost = a[APIHOST]
+                apiParams = a[PARMAS]
+                apiMethod = a[METHOD]
+                relatedParams = b[RELEATEDPARAMS]
                 if relatedParams and ";" in relatedParams:
                     relatedParams = relatedParams.split(";")
                 if apiParams:
-                    apiParams=json.loads(apiParams,encoding="utf8")
+                    apiParams = json.loads(apiParams, encoding="utf8")
                 else:
-                    apiParams=""
-                relatedApiId = a["relatedApi"]
+                    apiParams = ""
+                relatedApiId = a[RELATEDAPI]
                 if 0 != i and apiParams:
                     apiParams = string.Template(apiParams)
                     apiParams = apiParams.substitute(vars())
@@ -136,7 +170,7 @@ def excute_case(case):
                 # 判断relatedParams的数据类型，可能为list和str
                 if relatedParams is not None and respJson:
                     if isinstance(relatedParams, str):
-                        if relatedParams == "headers":
+                        if relatedParams == HEADERS:
                             apiHeaders = {"cookie": res.headers["Set-Cookie"]}
                     elif isinstance(relatedParams, list):
                         for j in relatedParams:
@@ -151,9 +185,9 @@ def excute_case(case):
                     if "login.mobile" in apiHost or "create_user" in apiHost and res is not None:
                         dis4 = re.findall(pat, res.headers["Set-Cookie"])
                         if isinstance(dis4, list):
-                            pc.wirte_info(HEADERS, HEADERS, "DIS4={}".format(dis4[1]))
+                            pc.wirte_info(HEADERS, "cookie", "DIS4={}".format(dis4[1]))
                         elif isinstance(dis4, str):
-                            pc.wirte_info(HEADERS, HEADERS, "DIS4={}".format(dis4))
+                            pc.wirte_info(HEADERS, "cookie", "DIS4={}".format(dis4))
                         log.info("headers信息写入配置文件成功--->{}".format(res.headers["Set-Cookie"]))
                     # if  "login.mobile" in apiHost and res is not None:
                     #     dis4=re.findall(res.headers["Set-Cookie"],res)
@@ -163,7 +197,7 @@ def excute_case(case):
 
 
 def get_report_data(caseID, caseDesciribe, apiHost,
-                    apiParams, expect, fact, time="", isPass="pass", reason="", databaseResutl="", databaseExpect=""):
+                    apiParams, expect, fact, time="", isPass=PASS, reason="", databaseResutl="", databaseExpect=""):
     result = {}
     result[CASEID] = caseID
     # result[APIID] = apiId
@@ -190,7 +224,7 @@ def check(fact, expect, result):
         response = fact.json()
         temp = ""
         if not expect:
-            result[ISPASS] = "block"
+            result[ISPASS] = BLOCK
             result[FACT] = fact.text
             result[TIME] = get_now().strftime(FORMORT)
             result[REASON] = "检查点未设置"
@@ -200,41 +234,41 @@ def check(fact, expect, result):
                 # 判断检查点中的字段是否在响应结果中
                 if key not in response.keys():
                     result[FACT] = fact.text
-                    result[ISPASS] = "fail"
+                    result[ISPASS] = FAIL
                     result[TIME] = get_now().strftime(FORMORT)
                     result[REASON] = "实际结果中没有{}这个字段,检查用例是否错误或接口返回结果错误".format(key)
                     return
                 # 判断检查点中字段的值和返回结果字段的值是否一致
                 if not str(expect[key]).__eq__(str(response[key])):
                     result[FACT] = fact.text
-                    result[ISPASS] = "fail"
+                    result[ISPASS] = FAIL
                     result[TIME] = get_now().strftime(FORMORT)
                     temp += "{}的值预期为：{}，实际为：{}\n".format(key, expect[key], response[key])
                     result[REASON] = temp
                 else:
                     # 判断是否有检查点判断失败，如果有，ispass值仍然为fail
-                    if result[ISPASS].__eq__("fail"):
-                        result[ISPASS] = "fail"
+                    if result[ISPASS].__eq__(FAIL):
+                        result[ISPASS] = FAIL
                     else:
-                        result[ISPASS] = "pass"
+                        result[ISPASS] = PASS
                     result[TIME] = get_now().strftime(FORMORT)
             # 判断双重检查点，例如payload.message的形式
             else:
                 for key1 in expect[key].keys:
                     if str(response[key][key1]).__eq__(str(expect[key][key1])):
                         result[FACT] = fact.text
-                        result[ISPASS] = "fail"
+                        result[ISPASS] = FAIL
                         result[TIME] = get_now().strftime(FORMORT)
                         temp += "{}的值预期为：{}，实际为：{}\n".format(key, expect[key], response[key])
                         result[REASON] = temp
                     else:
                         result[FACT] = fact.text
-                        result[ISPASS] = "pass"
+                        result[ISPASS] = PASS
                         result[TIME] = get_now().strftime(FORMORT)
     except Exception as e:
-        result["ispass"] = "fail"
-        result["time"] = get_now().strftime("%Y/%m/%d %H:%M:%S")
-        result["reason"] = "程序出错：{}".format(str(e))
+        result[ISPASS] = FAIL
+        result[TIME] = get_now().strftime(FORMORT)
+        result[REASON] = "程序出错：{}".format(str(e))
         log.error(e)
         return
 
@@ -247,7 +281,7 @@ def checkDatabase(databaseExpect, databaseResult, result, fact):
     if not databaseResult:
         result[DATABASERESUTL] = " "
     if databaseResult is not "" and databaseExpect is "":
-        result[ISPASS] = "block"
+        result[ISPASS] = BLOCK
         result[FACT] = fact.text
         result[TIME] = get_now().strftime(FORMORT)
         result[REASON] = "数据库检查点未设置"
@@ -255,39 +289,44 @@ def checkDatabase(databaseExpect, databaseResult, result, fact):
     if databaseExpect:
         if int(databaseExpect) == len(databaseResult):
             result[FACT] = fact.text
-            result[ISPASS] = "pass"
+            result[ISPASS] = PASS
             result[TIME] = get_now().strftime(FORMORT)
         else:
             result[FACT] = fact.text
-            result[ISPASS] = "fail"
+            result[ISPASS] = FAIL
             result[TIME] = get_now().strftime(FORMORT)
             result[REASON] = "数据库检查失败，预期返回{}条数据，实际返回{}条数据".format(int(databaseExpect),
                                                                   len(databaseResult))
 
 
 def runAll():
-    # 开始测试之前先清除数据库前一次测试储存的数据
-    con.truncate_data("testCase")
-    con.truncate_data("testResult")
-    con.truncate_data("apiInfo")
-    resultSet = []
-    cases = hc.get_cases()
-    start_time = time.time()
+    # if os.path.exists(report.reportPath) and report.reportPath.c
 
+    # 开始测试之前先清除数据库前一次测试储存的数据
+    con.truncate_data(TABLECASE)
+    con.truncate_data(TABLERESULT)
+    con.truncate_data(TABLEAPIINFO)
+    resultSet = []  # 执行结果集
+    cases = get_all_case()  # 测试用例集
+    start_time = time.time()
+    if not cases:
+        log.error("用例为空，无匹配格式的.xlsx文件或文件中暂无用例数据")
+        return
+    log.info("共获取{}条用例".format(len(cases)))
     for case in cases:
         # 将用例存入数据库临时保存
-        con.insert_data("testcase", **case)
+        con.insert_data(TABLECASE, **case)
         # 将接口数据插入数据库apiInfo表中暂时保存
-        apiInfo = {"apiId": int(case["apiId"]), "apiHost": case["apiHost"], "apiParams": case["apiParams"],
-                   "method": case["method"], "relatedApi": case["relatedApi"], "relatedParams": case["relatedParams"]}
+        apiInfo = {APIID: int(case[APIID]), APIHOST: case[APIHOST], PARMAS: case[PARMAS],
+                   METHOD: case[METHOD], RELATEDAPI: case[RELATEDAPI], RELEATEDPARAMS: case[RELEATEDPARAMS]}
         # 如果数据库中不存在apiId的接口，则插入
         if not con.query_all(
                 "select * from apiInfo  where apiId={}"
-                        .format(apiInfo["apiId"])):
-            con.insert_data("apiInfo", **apiInfo)
+                        .format(apiInfo[APIID])):
+            con.insert_data(TABLEAPIINFO, **apiInfo)
 
     for case in cases:
-        log.info("正在执行第{}条用例".format(case[CASEID]))
+        log.info("正在执行caseId={}的用例".format(case[CASEID]))
         databaseExpect = case[DATABASEEXPECT]
         sqlStatement = case[SQLSTATEMENT]
         # 执行用例
@@ -305,21 +344,21 @@ def runAll():
         # 数据库验证
         checkDatabase(databaseExpect, sqlResult, result, res)
         # 将执行结果写入数据库临时保存
-        con.insert_data("testResult", **result)
+        con.insert_data(TABLERESULT, **result)
         resultSet.append(result)
     end_time = time.time()
     time_consum = end_time - start_time  # 测试耗时
     case_count = con.query_all(
-        "SELECT caseId FROM testresult"
+        "SELECT caseId FROM {}".format(TABLERESULT)
     )  # 执行用例
     fail_case = con.query_all(
-        "SELECT caseId FROM testresult WHERE ispass='fail'"
+        "SELECT caseId FROM {} WHERE ispass='{}'".format(TABLERESULT, FAIL)
     )  # 执行失败的用例
     block_case = con.query_all(
-        "SELECT caseId FROM testresult WHERE ispass='block'"
+        "SELECT caseId FROM {} WHERE ispass='{}'".format(TABLERESULT, BLOCK)
     )  # 执行阻塞的用例
     success_case = con.query_all(
-        "SELECT caseId FROM testresult WHERE ispass='pass'"
+        "SELECT caseId FROM {} WHERE ispass='{}'".format(TABLERESULT, PASS)
     )  # 执行成功的用例
     if case_count is None:
         case_count = 0
@@ -341,9 +380,11 @@ def runAll():
         .format(float("%.2f" % time_consum), case_count, success_case, fail_case, block_case)
     log.info(result_info)
     # 将测试结果写入测试报告
-    report = Report()
-    report.set_result_info(result_info)
-    report.get_report(resultSet)
+    try:
+        report.set_result_info(result_info)
+        report.get_report(resultSet)
+    except:
+        log.error("{}文件没有关闭".format(report.reportPath))
     # 关闭数据库
     con.close()
     con_server.close()

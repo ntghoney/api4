@@ -69,7 +69,6 @@ def updata_message(number):
         return
     if result["date_created"] < timedelta:
         sql = f"update t_user_verify set date_created='{get_now().strftime(FORMORT)}'where number={number}"
-        print(sql)
         con_server.update_data(sql)
     if result["status"] == 0:
         con_server.update_data(
@@ -91,6 +90,7 @@ def excute_case(case):
         apiId = case[APIID]
     host = case[APIHOST]
     if PARMAS in case.keys() and case[PARMAS]:
+        print(case[PARMAS])
         params = json.loads(case[PARMAS], encoding="utf8")
         # 如果接口中有参数为phone，可能这个接口需要验证码，则调用updata_message初始化t_user_verify表
         if "phone" in params.keys():
@@ -196,6 +196,11 @@ def excute_case(case):
     return res
 
 
+"""
+测试报告模板
+"""
+
+
 def get_report_data(caseID, caseDesciribe, apiHost,
                     apiParams, expect, fact, time="", isPass=PASS, reason="", databaseResutl="", databaseExpect=""):
     result = {}
@@ -230,14 +235,14 @@ def check(fact, expect, result):
             result[REASON] = "检查点未设置"
             return
         for key in expect.keys():
+            if key not in response.keys():
+                result[FACT] = fact.text
+                result[ISPASS] = FAIL
+                result[TIME] = get_now().strftime(FORMORT)
+                result[REASON] = "实际结果中没有{}这个字段,检查用例是否错误或接口返回结果错误".format(key)
+                return
             if not isinstance(expect[key], dict):
                 # 判断检查点中的字段是否在响应结果中
-                if key not in response.keys():
-                    result[FACT] = fact.text
-                    result[ISPASS] = FAIL
-                    result[TIME] = get_now().strftime(FORMORT)
-                    result[REASON] = "实际结果中没有{}这个字段,检查用例是否错误或接口返回结果错误".format(key)
-                    return
                 # 判断检查点中字段的值和返回结果字段的值是否一致
                 if not str(expect[key]).__eq__(str(response[key])):
                     result[FACT] = fact.text
@@ -250,23 +255,31 @@ def check(fact, expect, result):
                     if result[ISPASS].__eq__(FAIL):
                         result[ISPASS] = FAIL
                     else:
+                        result[FACT] = fact.text
                         result[ISPASS] = PASS
                     result[TIME] = get_now().strftime(FORMORT)
             # 判断双重检查点，例如payload.message的形式
             else:
-                for key1 in expect[key].keys:
+                for key1 in expect[key].keys():
+                    if not key1 in response[key].keys():
+                        result[FACT] = fact.text
+                        result[ISPASS] = FAIL
+                        result[TIME] = get_now().strftime(FORMORT)
+                        result[REASON] = "实际结果中没有{}:{}这个字段,检查用例是否错误或接口返回结果错误".format(key, key1)
+                        return
                     if str(response[key][key1]).__eq__(str(expect[key][key1])):
+                        result[FACT] = fact.text
+                        result[ISPASS] = PASS
+                        result[TIME] = get_now().strftime(FORMORT)
+                    else:
                         result[FACT] = fact.text
                         result[ISPASS] = FAIL
                         result[TIME] = get_now().strftime(FORMORT)
                         temp += "{}的值预期为：{}，实际为：{}\n".format(key, expect[key], response[key])
                         result[REASON] = temp
-                    else:
-                        result[FACT] = fact.text
-                        result[ISPASS] = PASS
-                        result[TIME] = get_now().strftime(FORMORT)
     except Exception as e:
         result[ISPASS] = FAIL
+        result[FACT] = ""
         result[TIME] = get_now().strftime(FORMORT)
         result[REASON] = "程序出错：{}".format(str(e))
         log.error(e)
@@ -274,6 +287,12 @@ def check(fact, expect, result):
 
 
 def checkDatabase(databaseExpect, databaseResult, result, fact):
+    if databaseResult is None:
+        result[FACT] = fact.text
+        result[ISPASS] = BLOCK
+        result[TIME] = get_now().strftime(FORMORT)
+        result[REASON] = "用例sql语句书写错误"
+        return
     if databaseExpect:
         result[DATABASEEXPECT] = databaseExpect
     else:
@@ -380,11 +399,11 @@ def runAll():
         .format(float("%.2f" % time_consum), case_count, success_case, fail_case, block_case)
     log.info(result_info)
     # 将测试结果写入测试报告
-    try:
-        report.set_result_info(result_info)
-        report.get_report(resultSet)
-    except:
-        log.error("{}文件没有关闭".format(report.reportPath))
+    print(resultSet)
+    report.set_result_info(result_info)
+    report.get_report(resultSet)
+
+    # log.error("{}文件没有关闭".format(report.reportPath))
     # 关闭数据库
     con.close()
     con_server.close()

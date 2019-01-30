@@ -42,16 +42,24 @@ from common.parseExc import PaserExc
 from common.report import Report
 import os
 import re
-path = os.path.abspath(__file__).replace("temp.py", "cases")
-dir_name = os.listdir(path)
-print(os.path.abspath("."))
-for i in dir_name:
-    extension = os.path.splitext(i)[1]
-    if extension == ".xlsx":
-        print("{}--{}".format(i,True))
-    else:
-        print("{}--{}".format(i,False))
-rep=re.compile(r"^case_")
-report=Report()
-print(os.access(report.reportPath,os.F_OK))
+# path = os.path.abspath(__file__).replace("temp.py", "cases")
+# dir_name = os.listdir(path)
+# print(os.path.abspath("."))
+# for i in dir_name:
+#     extension = os.path.splitext(i)[1]
+#     if extension == ".xlsx":
+#         print("{}--{}".format(i,True))
+#     else:
+#         print("{}--{}".format(i,False))
+# rep=re.compile(r"^case_")
+# report=Report()
+# print(os.access(report.reportPath,os.F_OK))
+from common.conDatabase import ConMysql
+con=ConMysql()
+s=con.query_one("select * from testresult")
+print(type(s))
+import json
+s["time"]="2019/1/30 11:19:10"
+print(s)
+print(json.dumps(s,ensure_ascii=False))
 

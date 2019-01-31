@@ -20,6 +20,10 @@ def quchu_n(str):
 
 
 def get_case_path():
+    """
+    用例路径，以case_开头的.xlsx文件
+    :return:
+    """
     path = os.path.dirname(__file__).replace("common", "cases")
     rep = re.compile(r"^case_")
     dir_name = os.listdir(path)
@@ -48,6 +52,7 @@ class HandleCase(object):
     def handle_checkPoint(self, item):
         global key, value
         checkPints = {}
+
         key, value = item.split("=")
         if ":" in value:
             value = value.replace(":", "：")
@@ -78,8 +83,10 @@ class HandleCase(object):
                 related_params = item.split(";")
         return related_params
 
-    # 处理每条用例的数据格式
     def handle_data(self, datas):
+        """
+        处理用例的数据格式
+        """
         global cid, apiId, describe, host, expect, method, params, checkPints, relatedApi, relatedParams
         checkPints = {}
         # relatedParamsInfo = {}

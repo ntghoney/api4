@@ -14,14 +14,23 @@ log = Log().getLog()
 
 
 def get_base_info(database_info):
+    """
+    配置文件中数据库配置信息，port存储为str，转换为int
+    :param database_info:
+    :return:
+    """
     for key in database_info.keys():
         if key.__eq__("port"):
             database_info[key] = int(database_info[key])
     return database_info
 
 
-# 将数据转换成字典形式储存
 def data_for_dict(data):
+    """
+    将数据转换成字典形式储存
+    :param data:
+    :return:
+    """
     if len(data) == 8:
         data_dic = {}
         data_dic[CASEID] = int(data[0])
@@ -48,14 +57,28 @@ class ConMysql(object):
         self.cursor = self.conn.cursor(cursor=pymysql.cursors.DictCursor)
         self.log = logging.getLogger()
 
-    # 删除表中所有数据
     def truncate_data(self, table):
+        """
+        删除表数据
+        :param table:表名
+        :return:
+        """
         self.execute_sql("TRUNCATE TABLE {}".format(table))
 
     def execute_sql(self, sql):
+        """
+        执行sql
+        :param sql:
+        :return:
+        """
         self.cursor.execute(sql)
 
     def query_one(self, sql):
+        """
+        查询单条
+        :param sql:
+        :return:
+        """
         try:
             self.cursor.execute(sql)
             datas = self.cursor.fetchone()
@@ -65,6 +88,11 @@ class ConMysql(object):
         return datas
 
     def query_all(self, sql):
+        """
+        查询所有
+        :param sql:
+        :return:
+        """
         try:
             self.cursor.execute(sql)
             datas = self.cursor.fetchall()
@@ -74,6 +102,12 @@ class ConMysql(object):
         return datas
 
     def insert_data(self, table, **kwargs):
+        """
+        插入数据
+        :param table:
+        :param kwargs: (字段=value)
+        :return:
+        """
         sql = "INSERT INTO {} SET ".format(table)
         for key in kwargs.keys():
             if not key.__eq__(CASEID):
@@ -96,8 +130,12 @@ class ConMysql(object):
         except Exception as e:
             self.log.error("sql语句错误---->{}".format(sql))
 
-    # 修改数据
     def update_data(self, sql):
+        """
+        修改表数据
+        :param sql:
+        :return:
+        """
         try:
             self.cursor.execute(sql)
             self.conn.commit()
@@ -105,6 +143,10 @@ class ConMysql(object):
             self.log.error("sql语句错误---->{}".format(sql))
 
     def close(self):
+        """
+        关闭链接
+        :return:
+        """
         self.cursor.close()
         self.conn.close()
 
@@ -115,4 +157,4 @@ if __name__ == '__main__':
     # cases = HandleCase().get_cases()[0]
     con = ConMysql()
     # s = con.insert_data("testCase", **cases)
-    con.update_data("testcase",)
+    con.update_data("testcase", )
